@@ -26,3 +26,47 @@ public:
 		return leftN;
 	}
 };
+
+//再写一个函数比较好理解
+/**
+* Definition for a binary tree node.
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+	//判断结点是否在这个子树
+	bool contains(TreeNode* root, TreeNode* node){
+		if (root == nullptr){
+			return false;
+		}
+		if (root == node){
+			return true;
+		}
+		if (contains(root->left, node) == true){
+			return true;
+		}
+
+		return contains(root->right, node);
+	}
+	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+		bool pInleft = contains(root->left, p);
+		bool qInleft = contains(root->left, q);
+		bool pInright = !pInleft && p != root;
+		bool qInright = !qInleft && q != root;
+
+		if (pInleft && qInleft){
+			return lowestCommonAncestor(root->left, p, q);
+		}
+
+		if (pInright && qInright){
+			return lowestCommonAncestor(root->right, p, q);
+		}
+
+		return root;
+	}
+};

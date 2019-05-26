@@ -20,6 +20,7 @@ bool ishuiwen(string& s)
 	return true;
 }
 
+
 int main()
 {
 	string str1;
@@ -104,7 +105,7 @@ int main()
 }
 #endif
 
-
+#if 0
 //将字符串转数字，如果遇到不是数字的则直接返回0
 #include <iostream>
 #include <string>
@@ -183,3 +184,161 @@ int main()
 	cout << ret << endl;
 	return 0;
 }
+#endif
+
+#if 0
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(void)
+{
+	vector<int>array;
+	array.push_back(100);
+	array.push_back(300);
+	array.push_back(300);
+	array.push_back(300);
+	array.push_back(300);
+	array.push_back(500);
+	vector<int>::iterator itor;
+	for (itor = array.begin(); itor != array.end(); itor++)
+	{
+		if (*itor == 300)
+		{
+			itor = array.erase(itor);
+		}
+	} 
+
+	for(itor = array.begin(); itor != array.end(); itor++)
+	{
+		cout << *itor << "" << endl;
+	}
+	system("pause");
+	return 0;
+}
+#endif
+
+#if 0
+#include <iostream>
+using namespace std;
+
+class parent
+{
+	int i;
+protected:
+	int x;
+public:
+	parent()
+	{ 
+		x = 0; 
+		i = 0; 
+	}
+	void change()
+	{
+		x++;
+		i++;
+	}
+	void display();
+};
+class son :public parent
+{
+public:
+	void modify();
+};
+void parent::display() { cout << "x=" << x << endl; }
+void son::modify(){ x++; }
+
+int main()
+{
+	son A;
+	parent B;
+	A.display();
+	A.change();
+	A.modify();
+	A.display();
+	B.change();
+	B.display();
+	system("pause");
+	return 0;
+}
+#endif
+
+//求最小步长变成一个斐波那契数
+#include <iostream>
+#include <vector>
+using namespace std;
+int Fib(int n)
+{
+	if (0 == n){
+		return 0;
+	}
+	if (1 == n){
+		return 1;
+	}
+	return Fib(n - 1) + Fib(n - 2);
+}
+int main()
+{
+	vector<int> v;
+	int n;
+	int count1 = 0;
+	int count2 = 0;
+	v.resize(32);
+	for (int i = 0; i < 32; i++){
+		v[i] = Fib(i);
+	}
+	cin >> n;
+	int lit, big;
+	for (int i = 0; i < 31; i++){
+		if (n == v[i]){
+			cout << "0" << endl;
+			system("pause");
+			return 0;
+		}
+		if (n > v[i] && n < v[i + 1]){
+			lit = v[i];
+			big = v[i + 1];
+		}
+	}
+	while (lit != n){
+		++count1;
+		++lit;
+	}
+	while (big != n){
+		++count2;
+		--big;
+	}
+	cout << ((count1 < count2) ? count1 : count2) << endl;
+	system("pause");
+	return 0;
+}
+
+#include<stack>
+//括号匹配
+class Parenthesis {
+public:
+	bool chkParenthesis(string A, int n) {
+		stack<char> st;
+		for (auto e : A){
+			if (e == '('){
+				st.push(e);
+			}
+			else if (e == ')'){
+				if (!st.empty()){
+					st.pop();
+				}
+				else{
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+
+		if (st.empty())
+		{
+			return true;
+		}
+		return false;
+	}
+};

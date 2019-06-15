@@ -51,7 +51,7 @@ abcdefghijklmnop
 abcsafjklmnopqrstuvw
 输出
 jklmnop
-
+解法一：
 #include <iostream>
 #include <string>
 using namespace std;
@@ -77,6 +77,41 @@ int main()
 			}
 		}
 		cout << maxlen << endl;
+	}
+	return 0;
+}
+
+//动态规划做法
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	string s1, s2;
+	while (cin >> s1 >> s2){
+		if (s1.size() > s2.size()){
+			swap(s1, s2);
+		}
+
+		int len1 = s1.size();
+		int len2 = s2.size();
+		int i, j, start = 0, max = 0;
+		vector<vector<int>> MCS(len1 + 1, vector<int>(len2 + 1, 0));
+		for (i = 1; i <= len1; i++){
+			for (j = 1; j <= len2; j++){
+				if (s1[i - 1] == s2[j - 1]){
+					MCS[i][j] = MCS[i - 1][j - 1] + 1;
+				}
+				if (MCS[i][j] > max){
+					max = MCS[i][j];
+					start = i - max;
+				}
+			}
+		}
+		cout << s1.substr(start, max) << endl;
 	}
 	return 0;
 }

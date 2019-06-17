@@ -34,6 +34,34 @@ int main()
 	return 0;
 }
 
+//c++解法
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+	string str1, str2;
+	getline(cin, str1);
+	getline(cin, str2);
+
+	int hashtable[256] = { 0 };
+	//将字符串2中的每一个字符记录在数组中
+	for (size_t i = 0; i < str2.size(); i++){
+		hashtable[str2[i]]++;
+	}
+
+	string ret;
+	//如果字符串1的字符映射到hashtable中的位置为0，则证明字符串2中没有这个字符
+	for (size_t i = 0; i < str1.size(); i++){
+		if (hashtable[str1[i]] == 0){
+			ret += str1[i];
+		}
+	}
+	cout << ret << endl;
+	return 0;
+}
+
 
 //取队伍中最大平均值的和
 输入描述：输入的第一行为一个正整数n(1 <= n <= 10^5)
@@ -70,6 +98,31 @@ int main()
 			--it;
 		}
 		v.clear();
+		cout << sum << endl;
+	}
+	return 0;
+}
+
+//解法二
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	int n;    //组的数量
+	while (cin >> n){
+		long long sum = 0;
+		vector<int> v;
+		v.resize(n * 3);
+		for (int i = 0; i < n * 3; ++i){
+			cin >> v[i];
+		}
+		sort(v.begin(), v.end());
+		for (int i = n; i <= 3 * n - 2; i += 2){
+			sum += v[i];
+		}
 		cout << sum << endl;
 	}
 	return 0;

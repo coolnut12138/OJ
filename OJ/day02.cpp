@@ -45,6 +45,50 @@ int main()
 	return 0;
 }
 
+//解法二
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int n;    //数组元素的个数
+	while (cin >> n){
+		vector<int> nums;
+		nums.resize(n + 1);
+		int num;
+		for (int i = 0; i < n; i++){
+			cin >> nums[i];
+		}
+		nums[n] = 0;
+		long long sum = 0;    //排序子序列个数
+		int i = 0;
+		while (i < n) {
+			if (nums[i] < nums[i + 1]){
+				//一直非递减就会有一个排序子序列
+				while (i < n && nums[i] <= nums[i + 1]){
+					i++;
+				}
+				i++;
+				sum++;
+			}
+			else if (nums[i] == nums[i + 1]){
+				i++;    //如果所有数都一样，那么和最后一个0比较就可以保证排序子数组至少有一个
+			}
+			else{
+				//一直非递增就会有一个排序子序列
+				while (i < n && nums[i] >= nums[i + 1]){
+					i++;
+				}
+				i++;
+				sum++;
+			}
+		}
+		cout << sum << endl;
+	}
+	return 0;
+}
+
 题目描述
 将一句话的单词进行倒置，标点不倒置。比如 I like beijing.经过函数后变为：beijing.like I
 输入描述 :
@@ -87,17 +131,35 @@ int main()
 	return 0;
 }
 
-
-/*#include <iostream>
+//先反转整个句子，再每个单词逐个反转
+#include <iostream>
+#include <algorithm>
 #include <string>
 using namespace std;
 
 int main()
 {
-string s1, s2;
-cin >> s2;
-while(cin >> s1){
-s2 = s1 + " " + s2;
+	string s;
+	while (getline(cin, s)){
+		//反转整个句子
+		reverse(s.begin(), s.end());
+		//反转单词
+		auto start = s.begin();
+		while (start != s.end()){
+			auto end = start;
+			while (end != s.end() && *end != ' '){
+				end++;
+			}
+			reverse(start, end);
+
+			if (end != s.end()){
+				start = end + 1;
+			}
+			else{
+				start = end;
+			}
+		}
+		cout << s << endl;
+	}
+	return 0;
 }
-cout << s2 << endl;
-}*/

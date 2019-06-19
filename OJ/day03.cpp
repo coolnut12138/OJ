@@ -43,6 +43,63 @@ int main()
 	return 0;
 }
 
+//解法二：排序，但是sort的时间复杂度为O(n*logn)
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int n;
+	vector<int> v;
+	while (cin >> n){
+		v.push_back(n);
+	}
+	//排序
+	sort(v.begin(), v.end());
+	//在中间的数就是出现次数超过一半的数
+	cout << v[v.size() / 2 - 1] << endl;
+	return 0;
+}
+
+//解法三：最优解
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	vector<int> v;
+	int n;
+	while (cin >> n){
+		v.push_back(n);
+	}
+
+	int count = 0;    //标记元素出现的次数
+	int tmp = v[0];    //记录当前元素
+	//思路：当元素出现一次，count计数+1，当遇到别的元素count-1，
+	//当count减为0时，更新tmp为当前元素，并且count重新计数
+	//遍历完数组，如果count还不为0，那么tmp就是出现次数大于一半的数
+	for (int i = 0; i < v.size(); i++){
+		if (v[i] == tmp){
+			count++;
+		}
+		else {
+			count--;
+		}
+
+		if (count == 0){
+			tmp = v[i];
+			count++;
+		}
+	}
+	cout << tmp << endl;
+	return 0;
+}
+
+
+
 题目描述
 读入一个字符串str，输出字符串str中的连续最长的数字串
 输入描述 :
@@ -77,5 +134,32 @@ int main()
 	}
 	cout << res << endl;
 	system("pause");
+	return 0;
+}
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+	string str, ret, cur;
+	while (getline(cin, str)){    //cin遇到空格就会结束，所以使用getline
+		for (size_t i = 0; i <= str.size(); ++i){    //要遍历到最后一个元素，这样才不会遗漏最后一个字符串
+			if (str[i] >= '0' && str[i] <= '9'){
+				cur += str[i];
+			}
+			else {
+				//保存最长子串
+				if (ret.size() < cur.size()){
+					ret = cur;
+				}
+				else{
+					cur.clear();
+				}
+			}
+		}
+		cout << ret << endl;
+	}
 	return 0;
 }

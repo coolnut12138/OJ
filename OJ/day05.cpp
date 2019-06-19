@@ -65,6 +65,43 @@ int main()
 	return 0;
 }
 
+/////////////////////////////////////////////////
+#include <iostream>
+#include <string>
+using namespace std;
+
+bool isCircleText(const string& s){
+	size_t begin = 0;
+	size_t end = s.size() - 1;
+	while (begin < end){
+		if (s[begin] != s[end]){
+			return false;
+		}
+		begin++;
+		end--;
+	}
+	return true;
+}
+
+
+int main()
+{
+	string A, B;
+	getline(cin, A);
+	getline(cin, B);
+
+	size_t count = 0;    //回文数方法个数
+	//将字符串 B 给字符串 A 的每一个位置都插入并判断此时是否是回文字符串
+	for (size_t i = 0; i <= A.size(); i++){
+		string str = A;
+		str.insert(i, B);
+		if (isCircleText(str))
+			count++;
+	}
+	cout << count << endl;
+	return 0;
+}
+
 
 链接：https://www.nowcoder.com/questionTerminal/5a304c109a544aef9b583dce23f5f5db?toCommentId=1474080
 来源：牛客网
@@ -108,5 +145,29 @@ int main()
 	}
 	cout << sum << endl;
 	system("pause");
+	return 0;
+}
+
+#include <iostream>
+#include <vector>
+
+using namespace std;;
+int main()
+{
+	int n;
+	vector<int> v;
+	while (cin >> n){
+		int num;
+		while (cin >> num){
+			v.push_back(num);
+		}
+		long long sum = v[0];
+		long long max = v[0];
+		for (size_t i = 0; i < v.size(); i++){
+			max = (max + v[i]) > v[i] ? (max + v[i]) : v[i];
+			sum = sum > max ? sum : max;
+		}
+		cout << sum << endl;
+	}
 	return 0;
 }

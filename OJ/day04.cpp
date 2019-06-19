@@ -34,7 +34,29 @@ int main()
 	return 0;
 }
 
-输入两个整数M和N，求M的N进制表示方式（M大于0且N大于等于2小于等于16）
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int a, b, c, d;
+	cin >> a >> b >> c >> d;
+	int A = (a + c) / 2;
+	int C = (d - b) / 2;
+	int B1 = (c - a) / 2;
+	int B2 = (b + d) / 2;
+
+	if (B1 != B2){
+		cout << "No";
+	}
+	else {
+		cout << A << " " << B1 << " " << C;
+	}
+	return 0;
+}
+
+//输入两个整数M和N，求M的N进制表示方式（M大于0且N大于等于2小于等于16）
 #include <iostream>
 #include <string>
 using namespace std;
@@ -60,5 +82,41 @@ int main()
 		M /= N;
 	}
 	cout << s << endl;
+	return 0;
+}
+
+
+#include <iostream>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+//思路：N进制数，每个进制位的值分别为：X0*N^0 + X1*N^1 + X2*N^2 + ...
+//X0、X1、X2就是进制位的值，就是进行取模，余数就是当前低进制的位的值为多少
+//然后除掉进制数，进入下一个进制位的计算
+int main()
+{
+	string ret;
+	string table = "0123456789ABCDEF";    //进制转换表
+	int m, n;
+	while (cin >> m >> n){
+		bool flag = false;
+		//如果是负数，转为整数并标记一下
+		if (m < 0){
+			m = 0 - m;
+			flag = true;
+		}
+		//按进制换算对应的字符并添加到ret
+		while (m){
+			ret += table[m%n];
+			m /= n;
+		}
+
+		if (flag){
+			ret += '-';
+		}
+		reverse(ret.begin(), ret.end());
+		cout << ret << endl;
+	}
 	return 0;
 }

@@ -46,7 +46,6 @@ public:
 				//第j+1个字符的索引为j
                 if(res[j] && dict.find(s.substr(j, i-j)) != dict.end()){
                     res[i] = true;
-                    break;
                 }
             }
         }
